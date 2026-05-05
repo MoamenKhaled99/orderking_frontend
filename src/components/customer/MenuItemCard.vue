@@ -7,6 +7,7 @@ const props = defineProps<{ item: MenuItem; restaurantId: string }>()
 const cart = useCartStore()
 const qty = ref(1)
 const added = ref(false)
+const addBtn = ref<HTMLButtonElement | null>(null)
 
 function addToCart() {
   cart.addItem({
@@ -18,6 +19,8 @@ function addToCart() {
   })
   added.value = true
   setTimeout(() => (added.value = false), 1500)
+  const rect = addBtn.value?.getBoundingClientRect()
+  if (rect) cart.triggerFly(rect.left + rect.width / 2, rect.top + rect.height / 2)
 }
 </script>
 
@@ -59,6 +62,7 @@ function addToCart() {
         >+</button>
       </div>
       <button
+        ref="addBtn"
         @click="addToCart"
         :class="[
           'mt-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',

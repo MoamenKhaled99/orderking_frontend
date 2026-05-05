@@ -5,6 +5,7 @@ export interface Restaurant {
   imageUrl: string | null
   address: string
   category: string
+  deliveryFee: string
   createdAt: string
 }
 
@@ -53,6 +54,7 @@ export interface Order {
   userId: string
   status: OrderStatus
   paymentStatus: PaymentStatus
+  paymentMethod: PaymentMethod
   totalAmount: string
   deliveryAddress: string
   createdAt: string
@@ -66,10 +68,14 @@ export interface OrderStatusResponse {
   paymentStatus: PaymentStatus
 }
 
+export type PaymentMethod = 'CASH' | 'CARD'
+
 export interface CreateOrderPayload {
   restaurantId: string
   deliveryAddress: string
   items: Array<{ menuItemId: string; quantity: number }>
+  paymentMethod: PaymentMethod
+  idempotencyKey?: string
 }
 
 export interface CartItem {

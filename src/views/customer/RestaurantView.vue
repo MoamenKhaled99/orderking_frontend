@@ -9,6 +9,7 @@ const route = useRoute()
 const restaurant = ref<RestaurantWithMenu | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
+const selectedCategory = ref('All')
 
 onMounted(async () => {
   try {
@@ -30,6 +31,14 @@ const groupedMenu = computed(() => {
     {},
   )
 })
+
+const categories = computed(() => ['All', ...Object.keys(groupedMenu.value)])
+
+const displayedMenu = computed(() =>
+  selectedCategory.value === 'All'
+    ? groupedMenu.value
+    : { [selectedCategory.value]: groupedMenu.value[selectedCategory.value] ?? [] },
+)
 </script>
 
 <template>
@@ -55,12 +64,27 @@ const groupedMenu = computed(() => {
         </p>
       </div>
 
-      <div v-if="Object.keys(groupedMenu).length === 0" class="text-gray-500">
+      <!-- Category filter pills -->
+      <div v-if="categories.length > 2" class="flex gap-2 flex-wrap mb-6">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          @click="selectedCategory = cat"
+          :class="[
+            'px-3 py-1 rounded-full text-sm font-medium transition-colors',
+            selectedCategory === cat
+              ? 'bg-brand-500 text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
+          ]"
+        >{{ cat }}</button>
+      </div>
+
+      <div v-if="Object.keys(displayedMenu).length === 0" class="text-gray-500">
         No items available.
       </div>
 
       <div v-else class="space-y-8">
-        <section v-for="(items, category) in groupedMenu" :key="category">
+        <section v-for="(items, category) in displayedMenu" :key="category">
           <h2 class="text-lg font-semibold text-gray-800 mb-3 pb-2 border-b">{{ category }}</h2>
           <div class="space-y-3">
             <MenuItemCard

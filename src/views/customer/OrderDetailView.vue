@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ordersApi } from '@/api/orders'
+import { supabase } from '@/lib/supabase'
 import OrderStatusBadge from '@/components/customer/OrderStatusBadge.vue'
 import type { Order } from '@/types'
 
@@ -9,15 +10,37 @@ const route = useRoute()
 const order = ref<Order | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
+const liveConnected = ref(false)
+
+const orderId = route.params.id as string
+
+let channel: ReturnType<typeof supabase.channel> | null = null
 
 onMounted(async () => {
   try {
-    order.value = await ordersApi.getById(route.params.id as string)
+    order.value = await ordersApi.getById(orderId)
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to load order'
   } finally {
     loading.value = false
   }
+
+  channel = supabase
+    .channel(`order-${orderId}`)
+    .on(
+      'postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'orders', filter: `id=eq.${orderId}` },
+      (payload) => {
+        if (order.value) order.value.status = payload.new.status
+      },
+    )
+    .subscribe((status) => {
+      liveConnected.value = status === 'SUBSCRIBED'
+    })
+})
+
+onUnmounted(() => {
+  if (channel) supabase.removeChannel(channel)
 })
 </script>
 
@@ -31,7 +54,16 @@ onMounted(async () => {
     <p v-else-if="error" class="text-red-600">{{ error }}</p>
 
     <template v-else-if="order">
-      <h1 class="text-2xl font-bold text-gray-900 mb-1">Order Details</h1>
+      <div class="flex items-center justify-between mb-1">
+        <h1 class="text-2xl font-bold text-gray-900">Order Details</h1>
+        <span
+          v-if="liveConnected"
+          class="flex items-center gap-1.5 text-xs text-green-600 font-medium"
+        >
+          <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse inline-block" />
+          Live
+        </span>
+      </div>
       <p class="text-xs text-gray-400 mb-5 font-mono">{{ order.id }}</p>
 
       <div class="bg-white rounded-2xl shadow-sm p-5 mb-5 space-y-3">
@@ -40,6 +72,10 @@ onMounted(async () => {
           <OrderStatusBadge :payment-status="order.paymentStatus" />
         </div>
         <div class="text-sm text-gray-600 space-y-1">
+          <p>
+            <span class="font-medium text-gray-900">Payment:</span>
+            {{ order.paymentMethod === 'CASH' ? '💵 Cash on Delivery' : '💳 Card' }}
+          </p>
           <p><span class="font-medium text-gray-900">Delivery to:</span> {{ order.deliveryAddress }}</p>
           <p><span class="font-medium text-gray-900">Placed:</span> {{ new Date(order.createdAt).toLocaleString() }}</p>
         </div>
