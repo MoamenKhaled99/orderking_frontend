@@ -109,7 +109,7 @@ function retryPayment() {
       <!-- Payment method -->
       <div class="bg-white rounded-2xl shadow-sm p-5 mb-5">
         <h2 class="font-semibold text-gray-900 mb-4">Payment Method</h2>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <!-- Cash -->
           <button
             @click="paymentMethod = 'CASH'"

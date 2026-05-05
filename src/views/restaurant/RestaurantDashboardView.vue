@@ -60,18 +60,18 @@ function formatDate(iso: string) {
 </script>
 
 <template>
-  <div class="p-6 max-w-5xl mx-auto">
+  <div class="px-4 py-6 sm:px-6 max-w-5xl mx-auto">
     <h1 class="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
 
     <!-- Stats -->
-    <div v-if="loading" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div v-if="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <div v-for="n in 4" :key="n" class="bg-white rounded-2xl p-5 animate-pulse">
         <div class="h-3 bg-gray-200 rounded w-1/2 mb-3" />
         <div class="h-7 bg-gray-100 rounded w-2/3" />
       </div>
     </div>
 
-    <div v-else-if="stats" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div v-else-if="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <div class="bg-white rounded-2xl p-5 shadow-sm">
         <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Total Revenue</p>
         <p class="text-2xl font-bold text-gray-900">EGP {{ Number(stats.totalRevenue).toFixed(0) }}</p>

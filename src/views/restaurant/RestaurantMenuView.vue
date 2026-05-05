@@ -146,7 +146,7 @@ async function toggleAvailability(item: DashboardMenuItem) {
 </script>
 
 <template>
-  <div class="p-6 max-w-4xl mx-auto">
+  <div class="px-4 py-6 sm:px-6 max-w-4xl mx-auto">
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold text-gray-900">Menu</h1>
       <button
@@ -192,7 +192,7 @@ async function toggleAvailability(item: DashboardMenuItem) {
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-medium text-gray-600 mb-1">Name *</label>
             <input v-model="addDraft.name" placeholder="e.g. Classic Burger" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />
@@ -275,7 +275,7 @@ async function toggleAvailability(item: DashboardMenuItem) {
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-medium text-gray-600 mb-1">Name</label>
               <input v-model="editDraft.name" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400" />

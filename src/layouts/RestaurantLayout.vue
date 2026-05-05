@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import SidebarLayout from '@/components/shared/SidebarLayout.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -12,14 +13,12 @@ async function handleLogout() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 flex">
-    <!-- Left Sidebar -->
-    <aside class="w-56 bg-white border-r border-gray-100 flex flex-col shrink-0 sticky top-0 h-screen">
-      <div class="p-4 border-b border-gray-100">
-        <RouterLink to="/restaurant/dashboard" class="text-xl font-bold text-brand-600">OrderKing</RouterLink>
-        <div class="text-xs text-gray-500 mt-0.5">Restaurant Dashboard</div>
-      </div>
+  <SidebarLayout title="OrderKing" logo-to="/restaurant/dashboard">
+    <template #sidebar-header>
+      <div class="text-xs text-gray-500 mt-0.5 px-4 pb-3">Restaurant Dashboard</div>
+    </template>
 
+    <template #sidebar>
       <nav class="flex-1 p-3 space-y-1">
         <RouterLink
           to="/restaurant/dashboard"
@@ -68,7 +67,7 @@ async function handleLogout() {
       </nav>
 
       <div class="p-3 border-t border-gray-100">
-        <div v-if="auth.user" class="px-3 py-1.5 mb-2">
+        <div v-if="auth.user" class="px-3 py-1.5 mb-1">
           <div class="text-xs text-gray-500 truncate">{{ auth.user.email }}</div>
         </div>
         <button
@@ -81,11 +80,8 @@ async function handleLogout() {
           Logout
         </button>
       </div>
-    </aside>
+    </template>
 
-    <!-- Main area -->
-    <main class="flex-1 min-w-0">
-      <RouterView />
-    </main>
-  </div>
+    <RouterView />
+  </SidebarLayout>
 </template>

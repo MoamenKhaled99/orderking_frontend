@@ -73,15 +73,25 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
+  const auth = useAuthStore()
+  await auth.init()
+
   if (to.meta.requiresAuth || to.meta.requiresRestaurant) {
-    const auth = useAuthStore()
-    await auth.init()
     if (!auth.token) {
       const loginPath = to.meta.requiresRestaurant ? '/restaurant/login' : '/login'
       return { path: loginPath, query: { redirect: to.fullPath } }
     }
     if (to.meta.requiresRestaurant && auth.role !== 'RESTAURANT_OWNER') {
       return { path: '/' }
+    }
+  }
+
+  // Redirect restaurant owners away from customer area
+  if (auth.token && auth.role === 'RESTAURANT_OWNER') {
+    const isRestaurantRoute = to.path.startsWith('/restaurant')
+    const isPublicRoute = to.path === '/login' || to.path === '/restaurant/login' || to.path === '/restaurant/register'
+    if (!isRestaurantRoute && !isPublicRoute) {
+      return { path: '/restaurant/dashboard' }
     }
   }
 })

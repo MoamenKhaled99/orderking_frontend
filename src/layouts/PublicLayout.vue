@@ -10,9 +10,15 @@ import { RouterLink } from 'vue-router'
 
         <RouterLink
           to="/restaurant/register"
-          class="text-sm font-medium border border-brand-500 text-brand-600 hover:bg-brand-50 px-4 py-1.5 rounded-lg transition-colors"
+          class="hidden sm:inline-flex text-sm font-medium border border-brand-500 text-brand-600 hover:bg-brand-50 px-4 py-1.5 rounded-lg transition-colors"
         >
           Become a Partner
+        </RouterLink>
+        <RouterLink
+          to="/restaurant/register"
+          class="sm:hidden text-sm font-medium text-brand-600 hover:underline"
+        >
+          Partner
         </RouterLink>
       </div>
     </header>

@@ -27,7 +27,7 @@ function onStatusUpdated(status: OrderStatus) {
 </script>
 
 <template>
-  <div class="p-8 max-w-2xl">
+  <div class="px-4 py-6 sm:p-8 max-w-2xl">
     <div v-if="loading" class="animate-pulse space-y-4">
       <div class="h-6 bg-gray-200 rounded w-1/3" />
       <div class="h-40 bg-gray-200 rounded" />

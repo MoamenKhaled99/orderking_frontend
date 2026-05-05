@@ -54,7 +54,7 @@ async function save() {
 </script>
 
 <template>
-  <div class="p-6 max-w-xl mx-auto">
+  <div class="px-4 py-6 sm:px-6 max-w-xl mx-auto">
     <h1 class="text-2xl font-bold text-gray-900 mb-6">Restaurant Settings</h1>
 
     <div v-if="loading" class="bg-white rounded-2xl p-6 space-y-4 animate-pulse">

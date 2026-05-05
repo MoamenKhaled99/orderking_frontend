@@ -76,7 +76,7 @@ function itemsSummary(items: DashboardOrder['items']) {
 </script>
 
 <template>
-  <div class="p-6 max-w-4xl mx-auto">
+  <div class="px-4 py-6 sm:px-6 max-w-4xl mx-auto">
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold text-gray-900">Orders</h1>
       <div class="flex items-center gap-1.5">

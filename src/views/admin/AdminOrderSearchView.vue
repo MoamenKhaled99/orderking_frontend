@@ -12,7 +12,7 @@ function search() {
 </script>
 
 <template>
-  <div class="p-8">
+  <div class="px-4 py-6 sm:p-8">
     <h1 class="text-xl font-bold text-gray-900 mb-2">Order Lookup</h1>
     <p class="text-sm text-gray-500 mb-6">Enter an order UUID to view its details and update its status.</p>
 

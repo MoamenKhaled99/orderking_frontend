@@ -89,7 +89,7 @@ function itemsSummary(items: MyOrder['items']) {
         @click="router.push(`/orders/${order.id}`)"
         class="w-full bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow text-left"
       >
-        <div class="flex items-start justify-between gap-3">
+        <div class="flex flex-wrap items-start justify-between gap-2">
           <div class="flex items-center gap-3">
             <div v-if="order.restaurant.imageUrl" class="w-10 h-10 rounded-xl overflow-hidden shrink-0">
               <img :src="order.restaurant.imageUrl" :alt="order.restaurant.name" class="w-full h-full object-cover" />

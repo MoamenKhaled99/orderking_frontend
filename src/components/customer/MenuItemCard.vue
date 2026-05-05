@@ -20,7 +20,7 @@ function addToCart() {
   added.value = true
   setTimeout(() => (added.value = false), 1500)
   const rect = addBtn.value?.getBoundingClientRect()
-  if (rect) cart.triggerFly(rect.left + rect.width / 2, rect.top + rect.height / 2)
+  if (rect) cart.triggerFly(rect.left + rect.width / 2, rect.top + rect.height / 2, props.item.imageUrl, props.item.name)
 }
 </script>
 

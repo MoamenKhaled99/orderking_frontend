@@ -48,11 +48,11 @@ export const useCartStore = defineStore(
       items.value = []
     }
 
-    const animationTrigger = ref<{ x: number; y: number } | null>(null)
+    const animationTrigger = ref<{ x: number; y: number; imageUrl?: string | null; name?: string } | null>(null)
 
-    function triggerFly(x: number, y: number) {
-      animationTrigger.value = { x, y }
-      setTimeout(() => (animationTrigger.value = null), 800)
+    function triggerFly(x: number, y: number, imageUrl?: string | null, name?: string) {
+      animationTrigger.value = { x, y, imageUrl, name }
+      setTimeout(() => (animationTrigger.value = null), 900)
     }
 
     return { items, total, count, restaurantId, addItem, removeItem, updateQuantity, clear, animationTrigger, triggerFly }

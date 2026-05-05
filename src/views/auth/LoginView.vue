@@ -77,8 +77,12 @@ async function submit() {
   loading.value = true
   try {
     await auth.login(email.value, password.value)
-    const redirect = (route.query.redirect as string) || '/'
-    router.push(redirect)
+    if (auth.role === 'RESTAURANT_OWNER') {
+      router.push('/restaurant/dashboard')
+    } else {
+      const redirect = (route.query.redirect as string) || '/'
+      router.push(redirect)
+    }
   } catch (e) {
     const msg = e instanceof Error ? e.message : 'Login failed'
     if (msg.toLowerCase().includes('rate limit') || msg.toLowerCase().includes('too many')) {

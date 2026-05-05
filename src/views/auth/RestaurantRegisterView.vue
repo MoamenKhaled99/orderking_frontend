@@ -93,23 +93,21 @@ function goToDashboard() {
   <div class="flex-1 flex items-center justify-center px-4 py-12">
     <div class="w-full max-w-md">
       <!-- Step indicator -->
-      <div class="flex items-center justify-center gap-2 mb-8">
-        <div
-          v-for="n in [1, 2, 3]"
-          :key="n"
-          :class="[
-            'w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors',
-            step >= n ? 'bg-brand-500 text-white' : 'bg-gray-200 text-gray-500',
-          ]"
-        >
-          {{ n }}
-        </div>
-        <div class="absolute">
-          <div class="flex gap-16 -z-10">
-            <div :class="['w-16 h-0.5', step >= 2 ? 'bg-brand-500' : 'bg-gray-200']" />
-            <div :class="['w-16 h-0.5', step >= 3 ? 'bg-brand-500' : 'bg-gray-200']" />
+      <div class="flex items-center justify-center mb-8">
+        <template v-for="n in [1, 2, 3]" :key="n">
+          <div
+            :class="[
+              'w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors shrink-0',
+              step >= n ? 'bg-brand-500 text-white' : 'bg-gray-200 text-gray-500',
+            ]"
+          >
+            {{ n }}
           </div>
-        </div>
+          <div
+            v-if="n < 3"
+            :class="['h-0.5 w-12 sm:w-16 transition-colors', step > n ? 'bg-brand-500' : 'bg-gray-200']"
+          />
+        </template>
       </div>
 
       <!-- Step 1: Account -->
