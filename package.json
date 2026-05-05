@@ -1,0 +1,29 @@
+{
+  "name": "orderking-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.5.13",
+    "vue-router": "^4.4.5",
+    "pinia": "^2.3.0",
+    "pinia-plugin-persistedstate": "^3.2.3",
+    "@supabase/supabase-js": "^2.45.4",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "vite": "^6.0.5",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.3",
+    "vue-tsc": "^2.1.10",
+    "tailwindcss": "^3.4.17",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49"
+  }
+}
